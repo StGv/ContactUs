@@ -134,7 +134,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Contexts\ContactUsDbContext.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
-    <Compile Include="Controllers\CustomerMessagesController.cs" />
     <Compile Include="Controllers\DTOs\ContactUsFormDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -146,6 +145,14 @@
     <Compile Include="Migrations\201903021411139_PrimaryKeys.cs" />
     <Compile Include="Migrations\201903021411139_PrimaryKeys.Designer.cs">
       <DependentUpon>201903021411139_PrimaryKeys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903021510170_addReceivedOnDate.cs" />
+    <Compile Include="Migrations\201903021510170_addReceivedOnDate.Designer.cs">
+      <DependentUpon>201903021510170_addReceivedOnDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903021831022_DateFix.cs" />
+    <Compile Include="Migrations\201903021831022_DateFix.Designer.cs">
+      <DependentUpon>201903021831022_DateFix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -165,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="MapperConfig\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903021243450_InitialCreate.resx">
@@ -172,6 +180,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903021411139_PrimaryKeys.resx">
       <DependentUpon>201903021411139_PrimaryKeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903021510170_addReceivedOnDate.resx">
+      <DependentUpon>201903021510170_addReceivedOnDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903021831022_DateFix.resx">
+      <DependentUpon>201903021831022_DateFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
