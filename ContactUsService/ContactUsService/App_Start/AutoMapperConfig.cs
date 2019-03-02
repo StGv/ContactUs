@@ -10,12 +10,13 @@ namespace ContactUsService
         {
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<Models.CustomerMessage, Controllers.DTOs.ContactUsFormDTO>()
-                    .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => string.Join(" ", src.Customer.FirstName, src.Customer.LastName)))
-                    .ForMember(dest => dest.Message, opt => opt.MapFrom(src => src.Text));
+                    .ForMember(dest => dest.fullName, opt => opt.MapFrom(src => string.Join(" ", src.Customer.FirstName, src.Customer.LastName)))
+                    .ForMember(dest => dest.message, opt => opt.MapFrom(src => src.Text))
+                    .ForMember(dest => dest.email, opt => opt.MapFrom(src => src.Customer.Email));
 
                 cfg.CreateMap<Controllers.DTOs.ContactUsFormDTO, Models.CustomerMessage>()
-                     .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => new Models.Customer() { FirstName = getFirst(src.FullName) , LastName = getLast(src.FullName), Email = src.Email }))
-                     .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Message))
+                     .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => new Models.Customer() { FirstName = getFirst(src.fullName) , LastName = getLast(src.fullName), Email = src.email }))
+                     .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.message))
                      .ForMember(dest => dest.ReceivedOn, opt => opt.Ignore());
             });
         } 

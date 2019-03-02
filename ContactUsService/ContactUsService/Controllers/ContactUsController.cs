@@ -20,7 +20,7 @@ namespace ContactUsService.Controllers
 
         [ResponseType(typeof(ContactUsFormDTO))]
         [HttpGet]
-        [Route("getmessage/{id}")]
+        [Route("getmessage/{id}", Name = "GetMessagesById")]
         public async Task<IHttpActionResult> GetCustomerMessage(int id)
         {
             var message = await _repository.GetCustomerMessageAsync(id);
@@ -35,12 +35,6 @@ namespace ContactUsService.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        public  IHttpActionResult GetCustomepage()
-        {
-            return Ok($"you have reached ContactUsController");
-        }
-
         [HttpPost]
         public async Task<IHttpActionResult> SubmitMessage([FromBody] ContactUsFormDTO fromData)
         {
@@ -49,10 +43,11 @@ namespace ContactUsService.Controllers
                 return BadRequest(ModelState);
             }
             var entityModel = Mapper.Map<Models.CustomerMessage>(fromData);
-            var created = await _repository.CreateNewMessageAsync(entityModel);
+            var newId = await _repository.CreateNewMessageAsync(entityModel);
 
-            //return CreatedAtRoute("api/contactus/getmessage/{id}", newId, new { Id = newId});
-            return Ok(created > 0);
+            return CreatedAtRoute("GetMessagesById", 
+                new { id = newId }, 
+                Mapper.Map<ContactUsFormDTO>(entityModel));
         }
     }
 }
