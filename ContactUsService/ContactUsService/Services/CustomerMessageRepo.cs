@@ -32,8 +32,8 @@ namespace ContactUsService.Services
 
             try
             {
-                return await _db.SaveChangesAsync();
-
+                await _db.SaveChangesAsync();
+                return message.Id;
             }
             catch (DbUpdateException e)
             {

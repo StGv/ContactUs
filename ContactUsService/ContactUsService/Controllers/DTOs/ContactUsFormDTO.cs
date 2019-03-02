@@ -3,8 +3,8 @@ namespace ContactUsService.Controllers.DTOs
 {
     public class ContactUsFormDTO
     {
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string Message { get; set; }
+        public string fullName { get; set; }
+        public string email { get; set; }
+        public string message { get; set; }
     }
 }
