@@ -16,7 +16,6 @@ namespace ContactUsService.Services
 
         public async Task<CustomerMessage> GetCustomerMessageAsync(int id)
         {
-            //TODO Add include
             return  await _db.Messages.FindAsync(id);
         }
 
@@ -28,6 +27,7 @@ namespace ContactUsService.Services
                 message.Customer = customer;
             }
 
+            message.ReceivedOn = DateTime.UtcNow;
             _db.Messages.Add(message);
 
             try

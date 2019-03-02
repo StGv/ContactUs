@@ -8,13 +8,16 @@ namespace ContactUsService.Models
     {
         [Key]
         public int Id { get; set; }
+
         [MaxLength(2500)]
         public string Text { get; set; }
 
         [ForeignKey("CustomerEmail")]
         public string CustomerEmail { get { return Customer.Email; } }
 
-        public DateTime ReceivedOn => DateTime.UtcNow;
-        public Customer Customer { get; set; }
+        [Required]
+        public DateTime ReceivedOn { get; set; }
+
+        public virtual Customer Customer { get; set; }
     }
 }
