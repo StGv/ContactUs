@@ -4,10 +4,12 @@ using ContactUsService.Services;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 
 namespace ContactUsService.Controllers
 {
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     [RoutePrefix("api/contactus")]
     public class ContactUsController : ApiController
     {
