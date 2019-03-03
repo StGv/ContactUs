@@ -1,12 +1,9 @@
-﻿using System;
-using ContactUsService.Controllers;
+﻿using ContactUsService.Controllers;
 using ContactUsService.Controllers.DTOs;
 using ContactUsService.Services;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Dapper;
-using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ContactUsService.Tests
 {
@@ -18,9 +15,9 @@ namespace ContactUsService.Tests
         [TestInitialize]
         public void Before()
         {
-            ContactUsService.AutoMapperConfig.Initialize();
             _target = new ContactUsController(new CustomerMessageRepo(base.DbContext));
         }
+
 
         [TestMethod]
         public void testIfDataWillBeInsertedWhenPostedToController()
@@ -43,8 +40,34 @@ namespace ContactUsService.Tests
             Assert.IsTrue(dbCustomers.Count == 1);
 
             Assert.AreEqual(dbMessages[0].Text, fromData.message);
-            Assert.AreEqual(dbCustomers[0].FirstName, fromData.fullName.Split(' ')[0]);
-            Assert.AreEqual(dbCustomers[0].LastName, string.Join(" ", fromData.fullName.Trim().Split(' ').Skip(1)));
+            Assert.AreEqual(dbCustomers[0].FirstName, AutoMapperConfig.getFirstName(fromData.fullName));
+            Assert.AreEqual(dbCustomers[0].LastName, string.Join(" ", AutoMapperConfig.getLastName(fromData.fullName)));
+        }
+
+        [TestMethod]
+        public void testMultipleMessagesSentfromSameUser()
+        {
+            var fromData = new ContactUsFormDTO()
+            {
+                fullName = "Joseph Smith",
+                email = "smith.joseph@gmail.com",
+                message = "this is a very long message!"
+            };
+
+            for (int i = 0; i < 10; i++)
+            {
+                var taskPost = _target.SubmitMessage(fromData);
+                taskPost.Wait();
+            }
+
+            var dbMessages = GetMessageFromDB("smith.joseph@gmail.com") as List<Models.CustomerMessage>;
+            var dbCustomers = GetCustomersFromDB("smith.joseph@gmail.com") as List<Models.Customer>;
+
+            Assert.IsNotNull(dbMessages);
+            Assert.IsTrue(dbMessages.Count == 10);
+            Assert.IsNotNull(dbCustomers);
+            Assert.IsTrue(dbCustomers.Count == 1);
+
         }
 
         private IEnumerable<Models.CustomerMessage> GetMessageFromDB(string email)
@@ -66,5 +89,6 @@ namespace ContactUsService.Tests
 
             return taskQueryDB.Result.AsList();
         }
+
     }
 }

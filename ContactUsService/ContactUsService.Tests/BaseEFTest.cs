@@ -1,11 +1,9 @@
 ﻿using ContactUsService.Contexts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity.Infrastructure;
-using System.Transactions;
-using System.Linq;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 
 namespace ContactUsService.Tests
 {
@@ -20,14 +18,10 @@ namespace ContactUsService.Tests
         [TestInitialize]
         public void TestSetup()
         {
-            var connString = ConfigurationManager.ConnectionStrings[TESTDBNAME].ConnectionString;
-            DbContext = new ContactUsDbContext(connString);
-
-            //System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseAlwaysAndSeed<ContactUsDbContext>());
-            //DbContext.Database.Initialize(false);
-
+            DbContext = new ContactUsDbContext(TESTDBNAME);
             DbContext.Database.CreateIfNotExists();
             queryEngine = new DapperBase(DbContext.Database.Connection);
+            
         }
 
         [TestCleanup]
@@ -42,6 +36,8 @@ namespace ContactUsService.Tests
             {
                 DbContext.Entry(entity.Entity).State = EntityState.Detached;
             }
+
+            Database.Delete(.TESTDBNAME);
         }
     }
 }

@@ -67,9 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEFTest.cs" />
-    <Compile Include="CleanUp.cs" />
+    <Compile Include="GlobalSetUp.cs" />
     <Compile Include="DapperBase.cs" />
-    <Compile Include="DropCreateDatabaseAlwaysAndSeed.cs" />
     <Compile Include="IntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
