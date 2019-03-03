@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
-import { Button, Form , TextArea, Message} from 'semantic-ui-react';
+import ContactUsForm from './components/contactUsForm'
 import 'semantic-ui-css/semantic.min.css';
 
 class App extends Component {
-  messageMaxLength = 2500;
-  state = {
-    messageLen:this.messageMaxLength,
+   state = {
+    messageMaxLength:2500,
+    messageLen:2500,
     sending:false,
     error:'',
     success:undefined,
@@ -45,50 +44,19 @@ class App extends Component {
     .catch((error) => this.setState({...this.state, sending:false, success:false, error}));
   }
 
-  render() {
-    console.log(this.state)
+  onFirstNameChange = (e, {value}) => this.setState({...this.state, firstName:value});
+  onLastNameChange = (e, {value}) => this.setState({...this.state, lastName:value});
+  onEmailChange = (e, {value}) => this.setState({...this.state, email:value});
+  onMessageChange = (e, {value}) => this.setState({...this.state, message:value, messageLen:this.state.messageMaxLength-value.length});
 
-    return (
-      <div>
-        <Form className={this.state.success===true ? "success" : "warning"} onSubmit={e => e.preventDefault()} >
-          <Form.Input required
-            label='First Name' 
-            placeholder='First Name' 
-            type="text"
-            maxLength={50}
-            onChange={(e, {value}) => this.setState({...this.state, firstName:value})}
-            />
-          <Form.Input required
-            label='Last Name' 
-            placeholder='Last Name' 
-            type="text" 
-            maxLength={50}
-            onChange={(e, {value}) => this.setState({...this.state, lastName:value})}
-            />
-          <Form.Input required
-            label='Email' 
-            placeholder='joe@schmoe.com' 
-            type="email" 
-            maxLength={50}
-            onChange={(e, {value}) => this.setState({...this.state, email:value})}
-            />
-          <Form.Field required
-            control={TextArea} 
-            label='Message'
-            placeholder='your message here...' 
-            maxLength={this.messageMaxLength}
-            onChange={(e, {value}) => this.setState({...this.state, message:value, messageLen:this.messageMaxLength-value.length})}
-          />
-          <label>{this.state.messageLen}/{this.messageMaxLength}</label>
-          <br/>
-          <Button  className={this.state.sending===true ? "loading" : ""} onClick={() => this.onSendMessage()}>
-            Submit
-          </Button>
-          {(this.state.success===true) && <Message success header='Thank you!' content="Your message has been received!" />}
-          {(this.state.success===false) && <Message warning header='Ooops!' content={this.state.error.toString()} />}
-        </Form>
-      </div>
-    );
+  render() {
+    return <ContactUsForm {...this.state}
+      onFirstNameChange1={this.onFirstNameChange}
+      onLastNameChange={this.onLastNameChange}
+      onEmailChange={this.onEmailChange}
+      onMessageChange={this.onMessageChange}
+      onSendMessage={this.onSendMessage} 
+      />
   }
 }
 
