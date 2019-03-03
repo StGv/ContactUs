@@ -24,6 +24,8 @@ namespace ContactUsService.Services
             var customer = await _db.Customers.FindAsync(message.Customer.Email);
             if (customer != null)
             {
+                customer.FirstName = message.Customer.FirstName;
+                customer.LastName = message.Customer.LastName;
                 message.Customer = customer;
             }
 
