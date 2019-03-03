@@ -6,8 +6,8 @@ namespace ContactUsService.Contexts
     public class ContactUsDbContext : DbContext
     {
         public ContactUsDbContext(string nameOrConnectionString)
-            :base(nameOrConnectionString)
-        {
+            : base(nameOrConnectionString)
+        { 
         }
 
         public DbSet<CustomerMessage> Messages { get; set; }
