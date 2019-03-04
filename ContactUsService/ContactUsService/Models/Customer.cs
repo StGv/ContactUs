@@ -5,6 +5,7 @@ namespace ContactUsService.Models
     public class Customer
     {
         [Key]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         [MaxLength(50)]
