@@ -41,11 +41,11 @@ namespace ContactUsService.Tests
 
             Assert.AreEqual(dbMessages[0].Text, fromData.message);
             Assert.AreEqual(dbCustomers[0].FirstName, AutoMapperConfig.getFirstName(fromData.fullName));
-            Assert.AreEqual(dbCustomers[0].LastName, string.Join(" ", AutoMapperConfig.getLastName(fromData.fullName)));
+            Assert.AreEqual(dbCustomers[0].LastName, AutoMapperConfig.getLastName(fromData.fullName));
         }
 
         [TestMethod]
-        public void testMultipleMessagesSentfromSameUser()
+        public void testMultipleMessagesSentfromSameUserShouldNotCreateMultipleCustomers()
         {
             var fromData = new ContactUsFormDTO()
             {
@@ -68,6 +68,39 @@ namespace ContactUsService.Tests
             Assert.IsNotNull(dbCustomers);
             Assert.IsTrue(dbCustomers.Count == 1);
 
+        }
+
+        [TestMethod]
+        public void testWhenMessageFromExistingCustomerWithNewNameShouldUpdateCustomerName()
+        {
+            var fromData = new ContactUsFormDTO()
+            {
+                fullName = "Joseph Smith",
+                email = "smith.joseph@gmail.com",
+                message = "this is a very long message!"
+            };
+            var taskPost = _target.SubmitMessage(fromData);
+            taskPost.Wait();
+
+            var fromData2 = new ContactUsFormDTO()
+            {
+                fullName = "Josephine Smith-Jones",
+                email = "smith.joseph@gmail.com",
+                message = "this is a another even longr message!"
+            };
+            var taskPost2 = _target.SubmitMessage(fromData2);
+            taskPost2.Wait();
+
+            var dbMessages = GetMessageFromDB("smith.joseph@gmail.com") as List<Models.CustomerMessage>;
+            var dbCustomers = GetCustomersFromDB("smith.joseph@gmail.com") as List<Models.Customer>;
+
+            Assert.IsNotNull(dbMessages);
+            Assert.IsTrue(dbMessages.Count == 2);
+            Assert.IsNotNull(dbCustomers);
+            Assert.IsTrue(dbCustomers.Count == 1);
+
+            Assert.AreEqual(dbCustomers[0].FirstName, AutoMapperConfig.getFirstName(fromData2.fullName));
+            Assert.AreEqual(dbCustomers[0].LastName, AutoMapperConfig.getLastName(fromData2.fullName));
         }
 
         private IEnumerable<Models.CustomerMessage> GetMessageFromDB(string email)

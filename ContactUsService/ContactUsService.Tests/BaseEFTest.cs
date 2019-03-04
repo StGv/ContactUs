@@ -37,7 +37,7 @@ namespace ContactUsService.Tests
                 DbContext.Entry(entity.Entity).State = EntityState.Detached;
             }
 
-            Database.Delete(.TESTDBNAME);
+            Database.Delete(TESTDBNAME);
         }
     }
 }
