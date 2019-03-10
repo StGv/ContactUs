@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace ContactUsService.Tests
 {
     [TestClass]
-    public class IntegrationTests : BaseEFTest
+    public class IntegrationTests : TestDBInstanceBaseTest
     {
         ContactUsController _target;
 

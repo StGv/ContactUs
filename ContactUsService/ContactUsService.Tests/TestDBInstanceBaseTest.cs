@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace ContactUsService.Tests
 {
-    public class BaseEFTest
+    public class TestDBInstanceBaseTest
     {
         protected ContactUsDbContext DbContext;
 
