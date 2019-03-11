@@ -44,7 +44,7 @@ namespace ContactUsService.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var entityModel = Mapper.Map<Models.CustomerMessage>(fromData);
+            var entityModel = Models.CustomerMessage.Create(fromData.message, fromData.email, fromData.fullName);
             var newId = await _repository.CreateNewMessageAsync(entityModel);
 
             return CreatedAtRoute("GetMessagesById", 

@@ -40,8 +40,8 @@ namespace ContactUsService.Tests
             Assert.IsTrue(dbCustomers.Count == 1);
 
             Assert.AreEqual(dbMessages[0].Text, fromData.message);
-            Assert.AreEqual(dbCustomers[0].FirstName, AutoMapperConfig.getFirstName(fromData.fullName));
-            Assert.AreEqual(dbCustomers[0].LastName, AutoMapperConfig.getLastName(fromData.fullName));
+            Assert.AreEqual(dbCustomers[0].FirstName, Models.Customer.getFirstName(fromData.fullName));
+            Assert.AreEqual(dbCustomers[0].LastName, Models.Customer.getLastName(fromData.fullName));
         }
 
         [TestMethod]
@@ -99,8 +99,8 @@ namespace ContactUsService.Tests
             Assert.IsNotNull(dbCustomers);
             Assert.IsTrue(dbCustomers.Count == 1);
 
-            Assert.AreEqual(dbCustomers[0].FirstName, AutoMapperConfig.getFirstName(fromData2.fullName));
-            Assert.AreEqual(dbCustomers[0].LastName, AutoMapperConfig.getLastName(fromData2.fullName));
+            Assert.AreEqual(dbCustomers[0].FirstName, Models.Customer.getFirstName(fromData2.fullName));
+            Assert.AreEqual(dbCustomers[0].LastName, Models.Customer.getLastName(fromData2.fullName));
         }
 
         private IEnumerable<Models.CustomerMessage> GetMessageFromDB(string email)

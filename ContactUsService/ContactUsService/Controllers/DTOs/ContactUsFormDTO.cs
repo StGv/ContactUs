@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ContactUsService.Controllers.DTOs
 {
-    public class ContactUsFormDTO
+    public class ContactUsFormDTO : IContactUsDTO
     {
         [Required]
         [MaxLength(100)]

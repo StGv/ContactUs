@@ -26,10 +26,9 @@ namespace ContactUsService.Services
             {
                 customer.FirstName = message.Customer.FirstName;
                 customer.LastName = message.Customer.LastName;
-                message.Customer = customer;
+                message = CustomerMessage.Update(message.Text, customer);
             }
 
-            message.ReceivedOn = DateTime.UtcNow;
             _db.Messages.Add(message);
 
             try

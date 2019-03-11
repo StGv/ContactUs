@@ -141,6 +141,7 @@
     <Compile Include="Contexts\ContactUsDbContext.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\DTOs\ContactUsFormDTO.cs" />
+    <Compile Include="Controllers\DTOs\IContactUsDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
