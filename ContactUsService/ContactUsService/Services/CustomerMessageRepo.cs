@@ -19,7 +19,7 @@ namespace ContactUsService.Services
             return  await _db.Messages.FindAsync(id);
         }
 
-        public async Task<int> CreateNewMessageAsync(CustomerMessage message)
+        public async Task<CustomerMessage> CreateNewMessageAsync(CustomerMessage message)
         {
             var customer = await _db.Customers.FindAsync(message.Customer.Email);
             if (customer != null)
@@ -35,14 +35,14 @@ namespace ContactUsService.Services
             try
             {
                 await _db.SaveChangesAsync();
-                return message.Id;
+                return message;
             }
-            catch (DbUpdateException e)
+            catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
 
-            return 0;
+            return null;
         }
 
         #region IDisposable

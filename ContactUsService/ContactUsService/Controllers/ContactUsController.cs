@@ -45,11 +45,16 @@ namespace ContactUsService.Controllers
                 return BadRequest(ModelState);
             }
             var entityModel = Mapper.Map<Models.CustomerMessage>(fromData);
-            var newId = await _repository.CreateNewMessageAsync(entityModel);
+            var newMessage = await _repository.CreateNewMessageAsync(entityModel);
+
+            if(newMessage == null)
+            {
+                return InternalServerError();
+            }
 
             return CreatedAtRoute("GetMessagesById", 
-                new { id = newId }, 
-                Mapper.Map<ContactUsFormDTO>(entityModel));
+                new { id = newMessage.Id }, 
+                Mapper.Map<ContactUsFormDTO>(newMessage));
         }
     }
 }
