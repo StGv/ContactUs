@@ -9,7 +9,7 @@ using System.Web.Http.Description;
 
 namespace ContactUsService.Controllers
 {
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/contactus")]
     public class ContactUsController : ApiController
     {
